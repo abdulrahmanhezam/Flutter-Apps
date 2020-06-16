@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -28,53 +26,60 @@ class _HomePageState extends State<HomePage> {
   String _output = "0";
   double num1 = 0.0;
   double num2 = 0.0;
-  String Oprand = "";
-  buttonPrissed(String ButtonText){
-    if(ButtonText=="C"){
-      _output='0';
-      num1=0.0;
-      num2=0.0;
-      Oprand ="";
-    } else if (ButtonText == "+" || ButtonText == "-" || ButtonText == "/" || ButtonText == "X"){
-      num1= double.parse(output);
-      Oprand=ButtonText;
-      _output="";
+  String operand = "";
 
-    }else if (ButtonText=='.'){
-      if (_output.contains('.')){
+  buttonPressed(String buttonText) {
+    if (buttonText == "C") {
+      _output = '0';
+      num1 = 0.0;
+      num2 = 0.0;
+      operand = "";
+    } else if (buttonText == "+" ||
+        buttonText == "-" ||
+        buttonText == "/" ||
+        buttonText == "X") {
+      num1 = double.parse(output);
+      operand = buttonText;
+      _output = "";
+    } else if (buttonText == '.') {
+      if (_output.contains('.')) {
         print("Already Contains");
         return;
-      }else{
-        _output=_output + ButtonText;
+      } else {
+        _output = _output + buttonText;
       }
-    }else if(ButtonText=='='){
-      num2=double.parse(output);
-      if(Oprand=="+"){
+    } else if (buttonText == '=') {
+      num2 = double.parse(output);
+      if (operand == "+") {
         _output = (num1 + num2).toString();
       }
-      if(Oprand=="-"){
+      if (operand == "-") {
         _output = (num1 - num2).toString();
       }
-      if(Oprand=="X"){
+      if (operand == "X") {
         _output = (num1 * num2).toString();
       }
-      if(Oprand=="/"){
+      if (operand == "/") {
         _output = (num1 / num2).toString();
       }
-      num1=0.0;
-      num2=0.0;
-      Oprand="";
-    }else{
-      _output=_output+ButtonText;
+      if (operand == "/" || num2 == 0) {
+        print("not found");
+      }
+
+      num1 = 0.0;
+      num2 = 0.0;
+      operand = "";
+    } else {
+      _output = _output + buttonText;
     }
     print(_output);
     setState(() {
-      output=double.parse(_output).toStringAsFixed(2);
+      output = double.parse(_output).toStringAsFixed(2);
     });
   }
 
   // ignore: non_constant_identifier_names
-  Widget Thenumbers({String ButtonText, Color color}) {
+  Widget TheNumbers({String ButtonText, Color color}) {
     return Expanded(
       child: OutlineButton(
         color: color,
@@ -84,7 +89,7 @@ class _HomePageState extends State<HomePage> {
           style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
         ),
         onPressed: () {
-          buttonPrissed(ButtonText);
+          buttonPressed(ButtonText)(ButtonText);
         },
       ),
     );
@@ -100,53 +105,52 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           Container(
             padding: EdgeInsets.all(28),
-            alignment:Alignment.topRight,
+            alignment: Alignment.topRight,
             child: Text(
               output,
               style: TextStyle(fontSize: 38, fontWeight: FontWeight.bold),
             ),
           ),
-
           Expanded(
             child: new Divider(),
           ),
           Row(
             children: <Widget>[
-              Thenumbers(ButtonText: "C", color: Colors.amber),
-//              Thenumbers(ButtonText: "()", color: Colors.amber),
-//              Thenumbers(ButtonText: "%", color: Colors.amber),
-              Thenumbers(ButtonText: "/", color: Colors.amber),
+              TheNumbers(ButtonText: "C", color: Colors.amber),
+//              TheNumbers(ButtonText: "()", color: Colors.amber),
+//              TheNumbers(ButtonText: "%", color: Colors.amber),
+              TheNumbers(ButtonText: "/", color: Colors.amber),
             ],
           ),
           Row(
             children: <Widget>[
-              Thenumbers(ButtonText: "7", color: Colors.white),
-              Thenumbers(ButtonText: "8", color: Colors.white),
-              Thenumbers(ButtonText: "9", color: Colors.white),
-              Thenumbers(ButtonText: "X", color: Colors.amber),
+              TheNumbers(ButtonText: "7", color: Colors.white),
+              TheNumbers(ButtonText: "8", color: Colors.white),
+              TheNumbers(ButtonText: "9", color: Colors.white),
+              TheNumbers(ButtonText: "X", color: Colors.amber),
             ],
           ),
           Row(
             children: <Widget>[
-              Thenumbers(ButtonText: "4", color: Colors.white),
-              Thenumbers(ButtonText: "5", color: Colors.white),
-              Thenumbers(ButtonText: "6", color: Colors.white),
-              Thenumbers(ButtonText: "-", color: Colors.amber),
+              TheNumbers(ButtonText: "4", color: Colors.white),
+              TheNumbers(ButtonText: "5", color: Colors.white),
+              TheNumbers(ButtonText: "6", color: Colors.white),
+              TheNumbers(ButtonText: "-", color: Colors.amber),
             ],
           ),
           Row(
             children: <Widget>[
-              Thenumbers(ButtonText: "1", color: Colors.white),
-              Thenumbers(ButtonText: "2", color: Colors.white),
-              Thenumbers(ButtonText: "3", color: Colors.white),
-              Thenumbers(ButtonText: "+", color: Colors.amber),
+              TheNumbers(ButtonText: "1", color: Colors.white),
+              TheNumbers(ButtonText: "2", color: Colors.white),
+              TheNumbers(ButtonText: "3", color: Colors.white),
+              TheNumbers(ButtonText: "+", color: Colors.amber),
             ],
           ),
           Row(
             children: <Widget>[
-              Thenumbers(ButtonText: '0', color: Colors.white),
-//              Thenumbers(ButtonText: '.', color: Colors.white),
-              Thenumbers(ButtonText: "=", color: Colors.amber),
+              TheNumbers(ButtonText: '0', color: Colors.white),
+//              TheNumbers(ButtonText: '.', color: Colors.white),
+              TheNumbers(ButtonText: "=", color: Colors.amber),
             ],
           ),
         ],
