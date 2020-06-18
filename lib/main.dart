@@ -16,25 +16,28 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
+  //  "HomePage"الكلاس الرئيسي هو
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  String output = "0";
+  String output = ""; // متغير لتخزين العمليات في الاله الحاسبة
 
-  String _output = "0";
-  double num1 = 0.0;
-  double num2 = 0.0;
-  String operand = "";
+  String _output = ""; // يقوم باخراج العمليات الحسابية
+  double num1 = 0.0; //  متغير لتخزين الرقم الاول
+  double num2 = 0.0; // متغير لتخزين الرقم الثاني
+  String operand = ""; // متغير يخزن العمليات الحسابية كاالضرب والطرح
 
   buttonPressed(String buttonText) {
+    // تقوم الدالة ب جميع العمليات الحسابية داخل التطبيق
     if (buttonText == "C") {
-      _output = '0';
+      // buttonText  يقوم بتخزين جميع الازرار
       num1 = 0.0;
       num2 = 0.0;
       operand = "";
-    } else if (buttonText == "+" ||
+      _output = "";
+    } else if (buttonText == "+" || // هنا شرط ازرار العمليات الحسابية
         buttonText == "-" ||
         buttonText == "/" ||
         buttonText == "X") {
@@ -42,30 +45,32 @@ class _HomePageState extends State<HomePage> {
       operand = buttonText;
       _output = "";
     } else if (buttonText == '.') {
+      // اذا الرقم يحتوي على  "." من الاساس  ما يحتاج فاصلة اخرى
       if (_output.contains('.')) {
         print("Already Contains");
         return;
       } else {
-        _output = _output + buttonText;
+        _output = buttonText;
       }
     } else if (buttonText == '=') {
+      // شرط عملية المساواة
       num2 = double.parse(output);
       if (operand == "+") {
-        _output = (num1 + num2).toString();
+        _output = (num1 + num2).toString(); // شرط عملية الجمع
       }
       if (operand == "-") {
-        _output = (num1 - num2).toString();
+        _output = (num1 - num2).toString(); // شرط عملية الطرح
       }
       if (operand == "X") {
-        _output = (num1 * num2).toString();
+        _output = (num1 * num2).toString(); // شرط عملية الضرب
       }
       if (operand == "/") {
-        _output = (num1 / num2).toString();
+        _output = (num1 / num2).toString(); // شرط عملية القسمه
+        if (num2 == 0) {
+          // اذا كانت القسمه على على صفر الناتج غير معرف"notDefined"
+          _output = "notDefined";
+        }
       }
-      if (operand == "/" || num2 == 0) {
-        print("not found");
-      }
-
       num1 = 0.0;
       num2 = 0.0;
       operand = "";
@@ -74,14 +79,16 @@ class _HomePageState extends State<HomePage> {
     }
     print(_output);
     setState(() {
-      output = double.parse(_output).toStringAsFixed(2);
+      output = _output; // تقوم بعرض العمليات  اعلى
     });
   }
 
   // ignore: non_constant_identifier_names
   Widget TheNumbers({String ButtonText, Color color}) {
+    //  هنا نقوم بعمل الزر
     return Expanded(
       child: OutlineButton(
+        // نوع الزر المستخدم
         color: color,
         padding: EdgeInsets.all(24),
         child: Text(
@@ -89,7 +96,8 @@ class _HomePageState extends State<HomePage> {
           style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
         ),
         onPressed: () {
-          buttonPressed(ButtonText)(ButtonText);
+          buttonPressed(
+              ButtonText); // هنا نقوم باستدعاء  دالة العمليات داخل الزر
         },
       ),
     );
@@ -97,13 +105,16 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    //  هنا نقوم بتصميم الشكل الخارجي
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calculator '),
+        title:
+            Text('Calculator '), // هنا نقوم بوضع عنوان التطبيق في اعلى الصفحة
       ),
       body: Column(
         children: <Widget>[
           Container(
+            //  هنا حيث شاشة عرض المخرجات
             padding: EdgeInsets.all(28),
             alignment: Alignment.topRight,
             child: Text(
@@ -114,6 +125,8 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: new Divider(),
           ),
+
+          // هنا ترتيب الازرار على شكل صفوف
           Row(
             children: <Widget>[
               TheNumbers(ButtonText: "C", color: Colors.amber),
