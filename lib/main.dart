@@ -8,10 +8,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomePage(),
-    );
+    return MaterialApp( debugShowCheckedModeBanner: false,  home: HomePage(), );
   }
 }
 
@@ -30,17 +27,22 @@ class _HomePageState extends State<HomePage> {
   String operand = ""; // متغير يخزن العمليات الحسابية كاالضرب والطرح
 
   buttonPressed(String buttonText) {
-    // تقوم الدالة ب جميع العمليات الحسابية داخل التطبيق
+    // الدالة ما ترجع اي قيمة 
+	// تقوم الدالة باستقبال نص عبارة عن نص الزر 
+	// تقوم الدالة ب جميع العمليات الحسابية داخل التطبيق
+	
+	// buttonText  متغير نصي الهدف ان يحتوي على قيمة النص للازرار
+	
     if (buttonText == "C") {
-      // buttonText  يقوم بتخزين جميع الازرار
+      // السي هنا اختصار لكلمة clear وتعني مسح جميع البيانات السابقة 
       num1 = 0.0;
       num2 = 0.0;
       operand = "";
       _output = "";
-    } else if (buttonText == "+" || // هنا شرط ازرار العمليات الحسابية
+    } else if (buttonText == "+" || 
         buttonText == "-" ||
         buttonText == "/" ||
-        buttonText == "X") {
+        buttonText == "X") { // هنا شرط ازرار العمليات الحسابية 
       num1 = double.parse(output);
       operand = buttonText;
       _output = "";
@@ -68,15 +70,16 @@ class _HomePageState extends State<HomePage> {
         _output = (num1 / num2).toString(); // شرط عملية القسمه
         if (num2 == 0) {
           // اذا كانت القسمه على على صفر الناتج غير معرف"notDefined"
-          _output = "notDefined";
+          _output = "Division by zero is not defined!";
         }
       }
       num1 = 0.0;
       num2 = 0.0;
       operand = "";
     } else {
-      _output = _output + buttonText;
+      _output = _output + buttonText; 
     }
+	
     print(_output);
     setState(() {
       output = _output; // تقوم بعرض العمليات  اعلى
@@ -84,7 +87,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   // ignore: non_constant_identifier_names
-  Widget TheNumbers({String ButtonText, Color color}) {
+  Widget theNumbers({String ButtonText, Color color}) {
+  
     //  هنا نقوم بعمل الزر
     return Expanded(
       child: OutlineButton(
@@ -123,7 +127,12 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Expanded(
-            child: new Divider(),
+            child: new Divider(
+            color: Colors.black,
+            height: 20,
+            thickness: 5,
+            indent: 20,
+            endIndent: 0,),
           ),
 
           // هنا ترتيب الازرار على شكل صفوف
