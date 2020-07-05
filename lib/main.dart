@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'about_us_page.dart';
+import 'side_menu.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,10 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
       theme: ThemeData.dark(),
-
       debugShowCheckedModeBanner: false,
+      routes: <String, WidgetBuilder>{'/AboutUsPage': (context) => AboutUs()},
       home: HomePage(),
     );
   }
@@ -26,16 +27,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-
- divByZero(String message) async => Fluttertoast.showToast( //  تقوم هذه الدالة باظهار تنبيه عند القسمة على صفر
-        msg: message,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white,
-        fontSize: 16.0);
+  divByZero(String message) async => Fluttertoast.showToast(
+      //  تقوم هذه الدالة باظهار تنبيه عند القسمة على صفر
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.redAccent,
+      textColor: Colors.white,
+      fontSize: 16.0);
 
   String output = ""; // متغير لتخزين العمليات في الاله الحاسبة
 
@@ -68,8 +68,7 @@ class _HomePageState extends State<HomePage> {
       _output = "";
     } else if (operand == "%") {
       _output = (num1 / 100).toString();
-    }
-    else if (buttonText == '=') {
+    } else if (buttonText == '=') {
       // شرط عملية المساواة
       num2 = double.parse(output);
 
@@ -132,8 +131,32 @@ class _HomePageState extends State<HomePage> {
     //  هنا نقوم بتصميم الشكل الخارجي
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text('Calculator '), // هنا نقوم بوضع عنوان التطبيق في اعلى الصفحة
+        title: Text(
+          'Calculator ',
+        ), // هنا نقوم بوضع عنوان التطبيق في اعلى الصفحة
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            DrawerHeader(
+              child: Column(
+                children: <Widget>[
+                  Image(
+                      image: NetworkImage(
+                          'https://cdn.iconscout.com/icon/free/png-512/calculator-716-461701.png',
+                          scale:5),),
+                  Text("Calculator ",style: TextStyle(fontSize:26),),
+                ],
+              ),
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: <Color>[
+                Colors.white38,
+                Colors.white38,
+              ])),
+            ),
+            CustomListTile(),
+          ],
+        ),
       ),
       body: Column(
         children: <Widget>[
